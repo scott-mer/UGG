@@ -38,6 +38,6 @@ function Deck:new(o, count)
     do
         table.insert(self.cards, Card:new(nil, i))
     end
-    print(self.cards[1]:printCard())
+    self.count = count
     return o
 end
