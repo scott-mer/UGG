@@ -5,7 +5,7 @@ require("utilities")
 require("deck")
 
 function love.load()
-    Deck:new(nil, 10)
+    Deck:new(nil, 5)
 end
 
 function love.update(dt)
