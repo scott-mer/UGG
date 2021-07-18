@@ -1,45 +1,48 @@
 -- Untitled Gumball Game
 -- functions and classes dealing with decks
 
--- Card class
--- holds the information of a single card
-Cards = {
+cards = {
     {
         name = "punch",
         damage = 5,
         block = 0,
-        time = 2
+        time = 3
     },
     {
         name = "block",
         damage = 0,
+        block = 5,
+        time = 3
+    },
+    {
+        name = "jab",
+        damage = 3,
         block = 0,
-        time = 5
+        time = 2
     }
 }
 
-Card = {
-    id = 0,
-    name = "",
-    damage = 0,
-    block = 0,
-    time = 0
+-- Card class
+card = {
+    id = nil,
+    name = nil,
+    damage = nil,
+    block = nil,
+    time = nil
 }
-function Card:add(o, id, name)
-    o = o or {}
-    setmetatable(o, self)
-    self.__index = self
-    self.id = 1
-    
+function card:add(id, name)
+    local o = {}
+
+    o.id = id
     -- search for card in present cards
     isFound = false
-    for _,v in pairs(Cards) do
+    for _,v in pairs(cards) do
         if(v["name"] == name)
         then
-            self.name = v["name"]
-            self.damage = v["damage"]
-            self.block = v["block"]
-            self.time = v["time"]
+            o.name = v["name"]
+            o.damage = v["damage"]
+            o.block = v["block"]
+            o.time = v["time"]
             isFound = true
         end
     end
@@ -50,27 +53,34 @@ function Card:add(o, id, name)
         print("ERROR: Could not find card name")
     end
 
-    return o
+    self.__index = self
+    return setmetatable(o, self)
 end
 
-function Card:print()
+function card:print()
     print("Name:", self.name, "\nDamage:", self.damage, "\nBlock:", self.block, "\nTime:", self.time)
 end
 
 -- Deck class
--- holds the inforation of a deck
-Deck = {
+deck = {
     cards = {},
-    count = 0
+    count = nil
 }
-function Deck:new(o, count)
-    o = o or {}
-    setmetatable(o, self)
-    self.__index = self
-    for i = 1, count, 1
-    do
-        table.insert(self.cards, Card:add(nil, i, "block"))
-        print(self.cards[i]:print())
+function deck:new(names)
+    local o = {}
+    
+    o.cards = {}
+    for id, name in ipairs(names) do
+        table.insert(o.cards, card:add(id, name))
     end
-    return o
+    o.count = id
+
+    self.__index = self
+    return setmetatable(o, self)
+end
+
+function deck:print()
+    for id, card in ipairs(self.cards) do
+        card:print()
+    end
 end
