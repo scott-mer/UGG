@@ -5,13 +5,7 @@ require("utilities")
 require("deck")
 
 function love.load()
-    deck1 = deck:new({"jab", "punch", "punch", "block"})
-    deck2 = deck:new({"block", "punch", "jab", "block"})
-
-    print("Deck1")
-    deck1:print()
-    print("Deck2")
-    deck2:print()
+    Deck:new(nil, 5)
 end
 
 function love.update(dt)
